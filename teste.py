@@ -1,2 +1,6 @@
-teste=input("Digite algo: ")
-print(isinstance(teste,str))
+def teste(palavra):
+    a=float(input(f'Sua palavra é: {palavra}'))
+    return a
+
+teste('o teste funcionando')  
+print(teste('o teste funcionando')  )
