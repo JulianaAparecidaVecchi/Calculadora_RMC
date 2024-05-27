@@ -1,33 +1,25 @@
-def gerar_matriz(num_linhas, num_colunas):
-    matriz = []
-    for i in range(num_linhas):
-        linha = []
-        for j in range(num_colunas):
-            elemento = float(input(f'Digite o valor do elemento {i+1},{j+1}: '))
-            linha.append(elemento)
-        matriz.append(linha)  
-    return matriz      
-
-def imprimir_matriz(matriz):
-    for linha in matriz:
-        print(linha)
-
-
-def calcula_matriz_transposta(matriz):
+def calcular_matriz_adicionada(matriz):
     nlinhas = len(matriz)
     ncolunas = len(matriz[0])
-    transposta = []
-    for i in range(ncolunas):
-        linha_transposta = []
-        for j in range(nlinhas):
-            linha_transposta.append(matriz[j][i])
-        transposta.append(linha_transposta)
-    return transposta        
+    matriz_adicionada = []
+    for i in range(nlinhas):
+        linha = []
+        for j in range(ncolunas):
+            linha.append(matriz[i][j])
+        for k in range(2):  # Adiciona os dois primeiros elementos ao final da linha
+            linha.append(matriz[i][k])
+        matriz_adicionada.append(linha)
+    return matriz_adicionada
 
-matriz = gerar_matriz(6, 6)
-print("Matriz:")
-imprimir_matriz(matriz)
+    
+def definir_eixox():
+    np.arege()
 
-transposta = calcula_matriz_transposta(matriz)
-print("\nTransposta da Matriz:")
-imprimir_matriz(transposta)
+def imprimir_matriz(matriz):
+    for i in matriz:
+        print(i)
+
+matriz=[[3,2,3],[3,2,5],[4,5,6]]  
+re=calcular_matriz_adicionada(matriz)   
+print(re)  
+prin

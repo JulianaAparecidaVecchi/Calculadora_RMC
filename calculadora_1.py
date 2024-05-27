@@ -1,6 +1,6 @@
 import time
 import numpy as np
-import matplotlib
+import matplotlib.pyplot as plt
 
 def linha():
     print(80*"-")
@@ -104,8 +104,23 @@ def escolha_1():
         else:
             print("Opção inválida. Tente novamente.")
 
+
+
 def calcular_segundo_grau(a, b, c, x):
     return a * x ** 2 + b * x + c
+
+def definir_eixox():
+    return np.arange(-1000,-1001,1)
+
+def gerar_eixoy(y,a,b,c):
+    eixoy=[]
+    eixox=definir_eixox()
+    for x in eixox:
+        y=calcular_segundo_grau(a,b,c,x)
+        eixoy.append(y)
+
+def gerar_grafico(x,y):
+    pass
 
 def escolha_2():
     while True:
@@ -140,7 +155,7 @@ def escolha_2():
             b = float(input("Informe o valor de b: "))
             c = float(input("Informe o valor de c: "))
             resultado = calcular_segundo_grau(a, b, c, x)
-            print(f"Para a função f(x) = {a}x^2 + {b}x + {c}, quando x = {x}, o resultado é: {resultado}")
+            print(f"Para a função f(x) = {a}x² + {b}x + {c}, quando x = {x}, o resultado é: {resultado}")
 
         elif escolha_letra_2 == 'g':
             print("Ok, vamos calcular o vértice:")
@@ -158,8 +173,15 @@ def escolha_2():
             else:
                 print("Não é uma equação de segundo grau...")
 
-        elif escolha_letra_2 == 'h': #####
-            print("Ok, vamos gerar o gráfico:")
+        elif escolha_letra_2 == 'h': 
+            print("Ok, vamos calcular o vértice:")
+            a = float(input("Digite o valor de a: "))
+            if a != 0:
+                b = float(input("Informe o valor de b: "))
+                c = float(input("Informe o valor de c: "))
+                gerar_grafico
+            else:
+                print("Não é uma equação de segundo grau...")
 
         elif escolha_letra_2 == '0':
             print("Voltando ao menu principal.")
@@ -207,12 +229,6 @@ def escolha_3():
             print("Opção inválida. Tente novamente.")
 
 
-def matriz_3x3(linha0,linha1,linha2):
-    matriz = [linha0,linha1,linha2]
-    print("Matriz 3x3")
-    for linha in matriz:
-        print(linha)
-    return matriz 
 
 
 def escolha_4():
@@ -220,14 +236,40 @@ def escolha_4():
         linha()
         escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
         linha()
-        linhas=int(input('Digite o número de linhas da sua matriz: '))
-        colunas=int(input('Digite o númeor de colunas da sua matriz: '))
-        matriz_A=gerar_matriz(linhas,colunas)
+        linhasMA=pedir_informacao_matriz('linhas','A')
+        colunasMA=pedir_informacao_matriz('colunas','A')
+        matriz_A=gerar_matriz(linhasMA,colunasMA)
         imprimir_matriz(matriz_A)
         if escolhaLetra_4 == 'l':
-            print("Determinante (2X2 ou 3x3) - Verificar se é matriz quadrada")
+            if verificar_matriz_quadrada(matriz_A):
+                print('Essa é uma matriz quadrada')
+                if verificar_matriz2x2(matriz_A):
+                    print(f'O determinate dessa matriz 2x2 é: {calcular_determinate2x2 (matriz_A)}')
+
+                if verificar_matriz3x3(matriz_A):
+                    print(f'O determinante dessa matriz 3x3 é: {calcular_determinate3x3(matriz_A)}')
+            else:
+                print('Essa matriz NÃO é quadrada, portanto o número linha é diferente do número de colunas!')
         elif escolhaLetra_4 == 'm':
-            print("Multiplicação")
+            linhaMB=pedir_informacao_matriz('linhas','B')
+            colunaMB=pedir_informacao_matriz('colunas','B')
+            matriz_B=gerar_matriz(linhaMB,colunaMB)
+            imprimir_matriz(matriz_B)
+            if verificacao_multiplicacao(matriz_A,matriz_B):
+                print('É possível realizar essa multplicação de matrizes!')
+                matriz_C=multiplicar_matrizes(matriz_A,matriz_B)
+                linha()
+                linha()                
+
+            else:
+                linha()
+                print('É impossivel multiplicar essas matrizes, pois o número de colunas da primeira matriz é diferente do número de linhas da segunda matriz!')  
+                linha()
+                break  
+
+
+
+
         elif escolhaLetra_4 == 'n':
             transposta=calcula_matriz_trasposta(matriz_A)
             linha()
@@ -257,8 +299,6 @@ def imprimir_matriz(matriz):
     for i in matriz:
         print(i)
 
-        
-
 def calcula_matriz_trasposta(matriz):
     nlinhas=len(matriz)
     ncolunas=len(matriz[0])
@@ -270,6 +310,80 @@ def calcula_matriz_trasposta(matriz):
         transposta.append(linha_transposta)   
     return transposta     
 
+def matriz_3x3(linha0,linha1,linha2):
+    matriz = [linha0,linha1,linha2]
+    print("Matriz 3x3")
+    for linha in matriz:
+        print(linha)
+    return matriz 
+
+def pedir_informacao_matriz(pedido,nome_matriz):
+    resposta=int(input(f'Digite o número de {pedido} da sua matriz {nome_matriz}: '))
+    return resposta
+
+def verificacao_multiplicacao(matriza,matrizb):
+    if len(matriza[0]) == len(matrizb):
+        return True
+    else:
+        return False
+        
+def multiplicar_matrizes(matriza,matrizb):
+    matrizc=[]
+    nlinhas=len(matriza)
+    ncolunas=len(matrizb[0])
+    for i in range(nlinhas):
+        linha_multiplicaacao=[]
+        for j in range(ncolunas):
+            elemento=0
+            for k in range(len(matrizb)):
+                #tanto faz usar o len(matrizb)=Número de linhas da matriz B ou usar o len(matriza[0])=Número de colunas da matriz A
+                elemento+=matriza[i][k]*matrizb[k][j]
+            linha_multiplicaacao.append(elemento)   
+        matrizc.append(linha_multiplicaacao)   
+    return matrizc  
+
+def verificar_matriz_quadrada(matriz):
+    nlinhas=len(matriz)
+    ncolunas=len(matriz[0])
+    if nlinhas == ncolunas:
+        return True
+    else:
+        return False     
+    
+def verificar_matriz3x3(matriz):
+    nlinhas=len(matriz)
+    ncolunas=len(matriz[0])
+    if nlinhas==3 and ncolunas==3:
+        return True
+    else:
+        return False
+    
+def verificar_matriz2x2(matriz):
+    nlinhas=len(matriz)
+    ncolunas=len(matriz[0])
+    if nlinhas==2 and ncolunas==2:
+        return True
+    else:
+        return False    
+    
+def calcular_determinate2x2(matriz):    
+    diagonal_principal=[]
+    diagonal_principal.append(matriz[0][0])
+    diagonal_principal.append(matriz[1][1])
+    diagonal_secundaria=[]
+    diagonal_secundaria.append(matriz[0][1])
+    diagonal_secundaria.append(matriz[1][0])
+    determinante=(diagonal_principal[0]*diagonal_principal[1])-(diagonal_secundaria[0]*diagonal_secundaria[1])
+    return determinante
+
+def calcular_determinate3x3(matriz):
+    a, b, c = matriz[0]
+    d, e, f = matriz[1]
+    g, h, i = matriz[2]
+    
+    det = (a * e * i) + (b * f * g) + (c * d * h) - (c * e * g) - (b * d * i) - (a * f * h)
+    
+    return det
 
 
 ####  programa principal ####
