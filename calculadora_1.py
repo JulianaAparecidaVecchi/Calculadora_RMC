@@ -11,43 +11,25 @@ def sleep():
 def menu():
     linha()
     print("Calculadora - Escolha sua operação aritmética!")
-    linha()
-    sleep()
+    linha_menu()
     print("1 - Conjuntos numéricos")
-    sleep()
     print("2 - Funções de segundo grau")
-    sleep()
     print("3 - Funções exponenciais")
-    sleep()
     print("4 - Matrizes")
-    sleep()
     print("5 - Sair da calculadora")
-    sleep()
+    linha_menu()
 
-
+def linha_menu():
+    print(20*'=')
 
 def escolha_opcao(): 
     linha()
-    escolha = int(input("Digete o número da opção desejada!\n"))
+    escolha = int(input("Digite o número da opção desejada!\n"))
     linha()
     if escolha == 1:
-        print("Perfeito, opção (conjuntos numérios) selecionada!")
-        linha()
-        print("O que voce deseja fazer?")
-        print("A - Verificar se A é subconjunto próprio de B")
-        print("B - Realizar operação de União")
-        print("C - Calcular intersecção")
-        print("D - Calcular diferença")
-        print("0 - Voltar")
+        pass
     elif escolha == 2:
-        print("Perfeito, opção (função de segundo grau) selecionada!")
-        linha()
-        print("O que voce deseja fazer?")
-        print("E - Calcular raízes")
-        print("F - Calcular função em x pedido")
-        print("G - Calcular Vértice ")
-        print("H - Gerar gráfico")
-        print("0 - Voltar")
+        pass
     elif escolha == 3:
         print("Perfeito, opção (funções exponenciais) selecionada!")
         linha()
@@ -69,42 +51,69 @@ def escolha_opcao():
         linha()
         return escolha
     return escolha       
-    
+
+def pedir_conjunto(nomeconjunto): 
+    conjunto = set(input(f"Digite o conjunto {nomeconjunto}!\n "))
+    return conjunto  
+
+def calcular_diferença(conjuntoA,conjuntoB):
+    diferenca=conjuntoA - conjuntoB
+    return diferenca
+
+def calcular_interseccao(conjuntoA,conjuntoB):
+    interseccao = conjuntoA & conjuntoB
+    return interseccao
+
+def calcular_uniao(conjuntoA,conjuntoB):
+    uniao = conjuntoA | conjuntoB
+    return uniao
+
 def escolha_1():
     global menu, escolha_opcao
+    print("Perfeito, opção (conjuntos numérios) selecionada!")
     linha()
-    escolhaLetra1 = str(input("Digite a letra da opção desejada!\n"))
-    linha()
-    if escolhaLetra1 == 0:
-        print("Voltando...")
-    else:
-        print("Agora coloque seus conjuntos!")
-        conj1 = set(input("Digite o conjunto A!\n "))
-        conj2 = set(input("Digite o conjunto B!\n "))
-        if escolhaLetra1.lower() == 'a':
-            if conj1 <= conj2 and conj1 != conj2:
-                print("A é um subconjunto próprio de B")
-            elif conj2 <= conj1 and conj2 != conj1:
-                print("A não é um subconjunto próprio de B, mas B é um subconjunto próprio de A")
+    print("Informe seus conjuntos!")
+    conj1 = pedir_conjunto("A")
+    conj2 = pedir_conjunto("B")
+    while True:
+            linha_menu()
+            print("A - Verificar se A é subconjunto próprio de B")
+            print("B - Realizar operação de União")
+            print("C - Calcular intersecção")
+            print("D - Calcular diferença")
+            print("0 - Voltar")
+            linha_menu()
+            escolhaLetra1 = str(input("Digite a letra da opção desejada!\n"))
+            linha()
+            if escolhaLetra1 == '0':
+                print("Voltando...")
+                break
+
+            if escolhaLetra1.lower() == 'a':
+                if conj1 <= conj2 and conj1 != conj2:
+                    print("A é um subconjunto próprio de B")
+
+                elif conj2 <= conj1 and conj2 != conj1:
+                    print("A não é um subconjunto próprio de B, mas B é um subconjunto próprio de A")
+
+                else:
+                    print("A não é um subconjunto próprio de B")
+
+            elif escolhaLetra1.lower() == 'b':
+                uniao =  calcular_uniao(conj1,conj2)
+                print(f" A união é: {uniao}")
+
+            elif escolhaLetra1.lower() == 'c':
+                interseccao = calcular_interseccao(conj1,conj2)
+                print(f" A intersecção é: {interseccao}")
+
+            elif escolhaLetra1.lower() == 'd':
+                diferenca = calcular_diferença(conj1,conj2)
+                print(f"A diferença é: {diferenca}")
+
             else:
-                print("A não é um subconjunto próprio de B")   
-        
-        elif escolhaLetra1.lower() == 'b':
-            uniao = conj1|conj2
-            print(f" A união é: {uniao}")        
-        
-        elif escolhaLetra1.lower() == 'C':
-            interseccao = conj1 & conj2
-            print(f" A intersecção é: {interseccao}")
-        
-        elif escolhaLetra1.lower() == 'D':
-            diferenca = conj1 - conj2
-            print(f"A diferença é: {diferenca}")
-
-        else:
-            print("Opção inválida. Tente novamente.")
-
-
+                print("Opção inválida. Tente novamente.")
+                continue
 
 def calcular_segundo_grau(a, b, c, x):
     return a * x ** 2 + b * x + c
@@ -112,87 +121,109 @@ def calcular_segundo_grau(a, b, c, x):
 def definir_eixox():
     return np.arange(-1000,-1001,1)
 
-def gerar_eixoy(y,a,b,c):
+def gerar_eixoy(a,b,c):
     eixoy=[]
     eixox=definir_eixox()
     for x in eixox:
         y=calcular_segundo_grau(a,b,c,x)
         eixoy.append(y)
+        return x,y
 
 def gerar_grafico(x,y):
     pass
 
+def pedir_valor(nomea):
+    a = float(input(f"Informe o valor de {nomea}: "))
+    return a
+
+def calcular_delta(a,b,c):
+    delta = (b**2) - 4*a*c
+    return delta
+
+def calcular_raizes(a,b,delta):
+    if delta < 0:
+        parte_real=-b/2*a
+        parte_imaginaria=-delta/2*a
+        raiz1=(parte_real,+parte_imaginaria)
+        return raiz1
+    elif delta==0:
+        raiz = -b / (2*a)
+        return raiz
+    else:
+        raiz1= (-b + (delta*1/2))/(2*a)
+        raiz2= (-b - (delta*1/2))/(2*a)
+        return raiz1,raiz2
+
+def imprimir_raizes(raiz):
+    for r in raiz:
+        print(f'{r} i')
+
+def calcular_verticiex(b,a):
+    vx=-b/(2*a)
+    return vx
+
+def calcular_verticiey(delta,a):
+    vy=-delta/(4*a)
+    return vy
 def escolha_2():
-    while True:
-        linha()
-        escolha_letra_2 = input("Digite a letra da opção desejada: ").lower()
-        linha()
-        if escolha_letra_2 == 'e':
-            a = float(input("Digite o valor de a: "))
-            print("Ok, vamos calcular as raízes!")
+        print("Perfeito, opção (função de segundo grau) selecionada!")
+        while True:
+            a = pedir_valor("a")
             if a != 0:
-                b = float(input("Informe o valor de b: "))
-                c = float(input("Informe o valor de c: "))
-                delta = (b**2) - 4*a*c
-                if delta < 0:
-                    print("O valor de delta é igual a %.1f e não possui raízes reais" % delta)
-                elif delta == 0:
-                    raiz = (-b + delta**0.5)/(2*a)
-                    print("O valor de delta é igual a %.1f e possui apenas uma raiz igual a %.1f" % (delta, raiz))
+                b = pedir_valor("b")
+                c = pedir_valor("c")
+                break
+            else:
+                print("Não é uma equação de segundo grau...\nInforme o valor de a diferente de zero!")
+                continue
+            
+        while True:
+            linha_menu()
+            print("E - Calcular raízes")
+            print("F - Calcular função em x pedido")
+            print("G - Calcular Vértice ")
+            print("H - Gerar gráfico")
+            print("0 - Voltar")
+            linha_menu()
+            escolha_letra_2 = str(input("Digite a letra da opção desejada: "))
+            if escolha_letra_2 == '0':
+                print("Voltando ao menu principal.")
+                break
+            delta=calcular_delta(a,b,c)
+            if escolha_letra_2 == 'e':
+                    raizes=calcular_raizes(a,b,delta)
+                    if delta < 0:
+                        print(f"Existem duas raizes complexas {raizes}")
+                    elif delta == 0:
+                        print(f"Existe uma raiz real {raizes}" )
+                    else:
+                        print(f"Existem duas raizes reais {raizes}")
+
+            elif escolha_letra_2 == 'f':
+                print("Ok, vamos calcular a função em X pedido:")
+                x = pedir_valor('X')
+                resultado = calcular_segundo_grau(a, b, c, x)
+                print(f"Para a função f(x) = {a}x² + {b}x + {c}, quando x = {x}, o resultado é: {resultado}")
+
+            elif escolha_letra_2 == 'g':
+                print("Ok, vamos calcular o vértice:")
+                x_vertice = calcular_verticiex(b,a)
+                y_vertice = calcular_verticiey(delta,a)
+                print(f"O x do vértice da parábola é :{x_vertice}\nO y do vértice da parábola é :{y_vertice}")
+                if a>0:
+                    print('Ponto de Mínimo')
                 else:
-                    raiz1 = (-b + delta**0.5)/(2*a)
-                    raiz2 = (-b - delta**0.5)/(2*a)
-                    print("O valor de delta é igual a %.1f" % delta)
-                    print("Valor da raiz 1 = %.1f" % raiz1)
-                    print("Valor da raiz 2 = %.1f" % raiz2)
-            else:
-                print("Não é uma equação de segundo grau...")
+                    print('Ponto de Máximo')
 
-        elif escolha_letra_2 == 'f':
-            print("Ok, vamos calcular a função em X pedido:")
-            a = float(input("Digite o valor de a: "))
-            x = float(input("Digite o valor de x: "))
-            b = float(input("Informe o valor de b: "))
-            c = float(input("Informe o valor de c: "))
-            resultado = calcular_segundo_grau(a, b, c, x)
-            print(f"Para a função f(x) = {a}x² + {b}x + {c}, quando x = {x}, o resultado é: {resultado}")
+            elif escolha_letra_2 == 'h': 
+ 
 
-        elif escolha_letra_2 == 'g':
-            print("Ok, vamos calcular o vértice:")
-            a = float(input("Digite o valor de a: "))
-            if a != 0:
-                b = float(input("Informe o valor de b: "))
-                c = float(input("Informe o valor de c: "))
-                delta = (b ** 2) - 4 * a * c
-                if delta >= 0:
-                    x_vertice = -b / (2 * a)
-                    y_vertice = -delta / (4 * a)
-                    print(f"O vértice da parábola é ({x_vertice}, {y_vertice})")
-                else:
-                    print("A parábola não possui vértice real.")
-            else:
-                print("Não é uma equação de segundo grau...")
-
-        elif escolha_letra_2 == 'h': 
-            print("Ok, vamos calcular o vértice:")
-            a = float(input("Digite o valor de a: "))
-            if a != 0:
-                b = float(input("Informe o valor de b: "))
-                c = float(input("Informe o valor de c: "))
-                gerar_grafico
-            else:
-                print("Não é uma equação de segundo grau...")
-
-        elif escolha_letra_2 == '0':
-            print("Voltando ao menu principal.")
-            break
-
-        else:
-            print("Opção inválida. Tente novamente.")
+                plt.plot(gerar_eixoy(a,b,c))
+                plt.show()
 
 
 def calcular_exponencial(a, b, x):
-    return a * (b ** x)
+   pass
 
 
 def escolha_3():
@@ -233,58 +264,49 @@ def escolha_3():
 
 def escolha_4():
     while True:
-        linha()
         escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
-        linha()
-        linhasMA=pedir_informacao_matriz('linhas','A')
-        colunasMA=pedir_informacao_matriz('colunas','A')
-        matriz_A=gerar_matriz(linhasMA,colunasMA)
-        imprimir_matriz(matriz_A)
-        if escolhaLetra_4 == 'l':
-            if verificar_matriz_quadrada(matriz_A):
-                print('Essa é uma matriz quadrada')
-                if verificar_matriz2x2(matriz_A):
-                    print(f'O determinate dessa matriz 2x2 é: {calcular_determinate2x2 (matriz_A)}')
+        while True:
+            linhasMA=pedir_informacao_matriz('linhas','A')
+            colunasMA=pedir_informacao_matriz('colunas','A')
+            matriz_A=gerar_matriz(linhasMA,colunasMA)
+            imprimir_matriz(matriz_A)
+            if escolhaLetra_4 == 'l':
+                if verificar_matriz_quadrada(matriz_A):
+                    print('Essa é uma matriz quadrada')
+                    if verificar_matriz2x2(matriz_A):
+                        print(f'O determinate dessa matriz 2x2 é: {calcular_determinate2x2 (matriz_A)}')
 
-                if verificar_matriz3x3(matriz_A):
-                    print(f'O determinante dessa matriz 3x3 é: {calcular_determinate3x3(matriz_A)}')
+                    if verificar_matriz3x3(matriz_A):
+                        print(f'O determinante dessa matriz 3x3 é: {calcular_determinate3x3(matriz_A)}')
+                else:
+                    print('Essa matriz NÃO é quadrada, portanto o número linha é diferente do número de colunas!')
+            elif escolhaLetra_4 == 'm':
+                linhaMB=pedir_informacao_matriz('linhas','B')
+                colunaMB=pedir_informacao_matriz('colunas','B')
+                matriz_B=gerar_matriz(linhaMB,colunaMB)
+                imprimir_matriz(matriz_B)
+                if verificacao_multiplicacao(matriz_A,matriz_B):
+                    print('É possível realizar essa multplicação de matrizes!')
+                    matriz_C=multiplicar_matrizes(matriz_A,matriz_B)
+                    linha()
+                    linha()                
+                else:
+                    linha()
+                    print('É impossivel multiplicar essas matrizes, pois o número de colunas da primeira matriz é diferente do número de linhas da segunda matriz!')  
+                    linha()
+                    break  
+            elif escolhaLetra_4 == 'n':
+                transposta=calcula_matriz_trasposta(matriz_A)
+                linha()
+                print("Matriz transposta")
+                imprimir_matriz(transposta)
+                linha()
+            elif escolhaLetra_4 == '0':
+                print("Voltando ao menu principal.")
+                break
             else:
-                print('Essa matriz NÃO é quadrada, portanto o número linha é diferente do número de colunas!')
-        elif escolhaLetra_4 == 'm':
-            linhaMB=pedir_informacao_matriz('linhas','B')
-            colunaMB=pedir_informacao_matriz('colunas','B')
-            matriz_B=gerar_matriz(linhaMB,colunaMB)
-            imprimir_matriz(matriz_B)
-            if verificacao_multiplicacao(matriz_A,matriz_B):
-                print('É possível realizar essa multplicação de matrizes!')
-                matriz_C=multiplicar_matrizes(matriz_A,matriz_B)
-                linha()
-                linha()                
-
-            else:
-                linha()
-                print('É impossivel multiplicar essas matrizes, pois o número de colunas da primeira matriz é diferente do número de linhas da segunda matriz!')  
-                linha()
-                break  
-
-
-
-
-        elif escolhaLetra_4 == 'n':
-            transposta=calcula_matriz_trasposta(matriz_A)
-            linha()
-            print("Matriz transposta")
-            imprimir_matriz(transposta)
-            linha()
-            
-
-        elif escolhaLetra_4 == '0':
-            print("Voltando ao menu principal.")
-            break
-        else:
-            print("Opção inválida. Tente novamente.")
-            print("")
-
+                print("Opção inválida. Tente novamente.")
+                continue
 def gerar_matriz(num_linhas,num_colunas):
     matriz=[]
     for i in range(num_linhas):
