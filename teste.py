@@ -1,25 +1,35 @@
-def calcular_matriz_adicionada(matriz):
-    nlinhas = len(matriz)
-    ncolunas = len(matriz[0])
-    matriz_adicionada = []
-    for i in range(nlinhas):
-        linha = []
-        for j in range(ncolunas):
-            linha.append(matriz[i][j])
-        for k in range(2):  # Adiciona os dois primeiros elementos ao final da linha
-            linha.append(matriz[i][k])
-        matriz_adicionada.append(linha)
-    return matriz_adicionada
+import numpy as np
+import matplotlib.pyplot as plt
 
-    
+def calcular_segundo_grau(a, b, c, x):
+    return a * x**2 + b * x + c
+
 def definir_eixox():
-    np.arege()
+    x = np.linspace(-10, 10, 1000)  # Reduzindo o intervalo para -10 a 10
+    return x
 
-def imprimir_matriz(matriz):
-    for i in matriz:
-        print(i)
+def gerar_eixoy(a, b, c):
+    eixoy = []
+    eixox = definir_eixox()
+    for x in eixox:
+        y = calcular_segundo_grau(a, b, c, x)
+        eixoy.append(y)
+    return eixoy
 
-matriz=[[3,2,3],[3,2,5],[4,5,6]]  
-re=calcular_matriz_adicionada(matriz)   
-print(re)  
-prin
+def gerar_grafico(a, b, c):
+    x = definir_eixox()
+    y = gerar_eixoy(a, b, c)
+    plt.plot(x, y)
+    plt.xlabel('Eixo X')
+    plt.ylabel('Eixo Y')
+    plt.title('Gráfico de uma função de segundo grau')
+    plt.grid(True)
+    plt.show()
+
+# Coeficientes da equação de segundo grau
+a = 1
+b = 0
+c = 0
+
+# Gerar o gráfico
+gerar_grafico(a, b, c)

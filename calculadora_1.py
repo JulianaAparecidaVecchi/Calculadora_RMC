@@ -23,33 +23,7 @@ def linha_menu():
     print(20*'=')
 
 def escolha_opcao(): 
-    linha()
     escolha = int(input("Digite o número da opção desejada!\n"))
-    linha()
-    if escolha == 1:
-        pass
-    elif escolha == 2:
-        pass
-    elif escolha == 3:
-        print("Perfeito, opção (funções exponenciais) selecionada!")
-        linha()
-        print("O que voce deseja fazer?")
-        print("I - Verificar se é crescente ou decrescente")
-        print("J - calcular função em x pedido")
-        print("K - Gerar gráfico")
-        print("0 - Voltar")
-    elif escolha == 4:
-        print("Perfeito, opção (matrizes) selecionada!")
-        linha()
-        print("O que voce deseja fazer?")
-        print("L - Determinante (2X2 ou 3x3) - Verificar se é matriz quadrada ")
-        print("M - Multiplicação ")
-        print("N - Matriz transposta")
-        print("0 - Voltar")
-    if escolha == 5:
-        print("Tchau! Até uma próxima...")
-        linha()
-        return escolha
     return escolha       
 
 def pedir_conjunto(nomeconjunto): 
@@ -119,15 +93,17 @@ def calcular_segundo_grau(a, b, c, x):
     return a * x ** 2 + b * x + c
 
 def definir_eixox():
-    return np.arange(-1000,-1001,1)
+    x=np.arange(-100,101,1)
+    #vai de -100 até 100 de um em um
+    return x
 
 def gerar_eixoy(a,b,c):
-    eixoy=[]
-    eixox=definir_eixox()
+    eixoy = []
+    eixox = definir_eixox()
     for x in eixox:
-        y=calcular_segundo_grau(a,b,c,x)
+        y = calcular_segundo_grau(a, b, c, x)
         eixoy.append(y)
-        return x,y
+    return eixoy
 
 def gerar_grafico(x,y):
     pass
@@ -165,6 +141,17 @@ def calcular_verticiex(b,a):
 def calcular_verticiey(delta,a):
     vy=-delta/(4*a)
     return vy
+
+def gerar_grafico(a,b,c):
+    x = definir_eixox()
+    y = gerar_eixoy(a, b, c)
+    plt.plot(x, y)
+    plt.xlabel('Eixo X')
+    plt.ylabel('Eixo Y')
+    plt.title('Gráfico de uma função de segundo grau')
+    plt.grid(True)
+    plt.show()
+
 def escolha_2():
         print("Perfeito, opção (função de segundo grau) selecionada!")
         while True:
@@ -216,60 +203,104 @@ def escolha_2():
                     print('Ponto de Máximo')
 
             elif escolha_letra_2 == 'h': 
- 
 
-                plt.plot(gerar_eixoy(a,b,c))
-                plt.show()
-
+                gerar_grafico(a, b, c)
+            else:
+                print("Opção inválida. Tente novamente.")
+                continue
 
 def calcular_exponencial(a, b, x):
-   pass
+    y=a*b**x
+    return y
 
+def eixoy_exponencial(a,b,x):
+    eixoy=[]
+    eixox=definir_eixox()
+    for x in eixox:
+        y=calcular_exponencial(a,b,x)
+        eixoy.append(y)
+    return eixoy
 
+def gerar_grafico_exponencial(a, b,x):
+    x = definir_eixox()
+    y = eixoy_exponencial(a, b, x)
+    plt.plot(x, y)
+    plt.title('Função Exponencial')
+    plt.xlabel('Eixo X')
+    plt.ylabel('Eixo Y')
+    plt.grid(True)
+    plt.show()
+  
 def escolha_3():
+    print("Perfeito, opção (funções exponenciais) selecionada!")
+    print('Informe os valores!')
     while True:
-        linha()
+        valor_a = pedir_valor('a')
+        if valor_a==0:
+            print('A função resultará em zero!\nDigite um valor diferente de 0')
+            continue
+        else:
+            valor_b = pedir_valor('b')
+            if valor_b==1 or valor_b<=0:
+                print("Caso de inexistência, digite um valor para b que seja maior que zero e diferente de 1 ")
+                continue
+            else:
+                valor_x = float(input("Digite o valor de X para calcular a função: "))
+                break
+    
+    while True:
+        linha_menu()
+        print("I - Verificar se é crescente ou decrescente")
+        print("J - calcular função em x pedido")
+        print("K - Gerar gráfico")
+        print("0 - Voltar")
+        linha_menu()
         escolha_letra_3 = input("Digite a letra da opção desejada: ").lower()
         linha()
+        if escolha_letra_3 == '0':
+            print("Voltando ao menu principal...")
+            sleep()
+            break
         if escolha_letra_3 == 'i':
-            valor_a = float(input("Digite o valor de A: "))
-            if valor_a < 0 or valor_a == 1:
-                print("Valor de A incorreto! Tente novamente")
-            else:
                 print("Ok, vamos verificar se a função é crescente ou decrescente")
-                if valor_a > 1:
+                if valor_b > 1 and valor_a > 0:
                     print("A função é crescente!")
-                elif valor_a > 0 and valor_a < 1:
-                    print("A função é decrescente")
+                    continue
+                elif 0 < valor_b < 1 and valor_a < 0:
+                    print("A função é crescente!")
+                    continue
                 else:
-                    print("A função não é nem crescente nem decrescente.")
-        
+                    print("A função é decrescente")
+                    continue
         elif escolha_letra_3 == 'j':
-            valor_a = float(input("Digite o valor de A: "))
-            valor_b = int(input("Digite o valor de B: "))
-            valor_x = float(input("Digite o valor de X para calcular a função: "))
             resultado = calcular_exponencial(valor_a, valor_b, valor_x)
             print(f"Para a função f(x) = {valor_a} * {valor_b}^x, quando x = {valor_x}, o resultado é: {resultado}")
-        
-        elif escolha_letra_3 == 'k': #####
-            print("Ok, vamos gerar o gráfico")       
-        elif escolha_letra_3 == '0':
-            print("Voltando ao menu principal.")
-            break       
+            continue
+        elif escolha_letra_3 == 'k': 
+            gerar_grafico_exponencial(valor_a,valor_b,valor_x)              
         else:
             print("Opção inválida. Tente novamente.")
-
-
-
+            continue
 
 def escolha_4():
+    print("Perfeito, opção (matrizes) selecionada!")
     while True:
-        escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
-        while True:
+            escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
             linhasMA=pedir_informacao_matriz('linhas','A')
             colunasMA=pedir_informacao_matriz('colunas','A')
             matriz_A=gerar_matriz(linhasMA,colunasMA)
             imprimir_matriz(matriz_A)
+            linha_menu()
+            print("O que voce deseja fazer?")
+            print("L - Determinante (2X2 ou 3x3) - Verificar se é matriz quadrada ")
+            print("M - Multiplicação ")
+            print("N - Matriz transposta")
+            print("0 - Voltar")
+            linha_menu()
+            if escolhaLetra_4 == '0':
+                print("Voltando ao menu principal...")
+                sleep()
+                break
             if escolhaLetra_4 == 'l':
                 if verificar_matriz_quadrada(matriz_A):
                     print('Essa é uma matriz quadrada')
@@ -288,8 +319,7 @@ def escolha_4():
                 if verificacao_multiplicacao(matriz_A,matriz_B):
                     print('É possível realizar essa multplicação de matrizes!')
                     matriz_C=multiplicar_matrizes(matriz_A,matriz_B)
-                    linha()
-                    linha()                
+                    imprimir_matrizes_multiplicacao(matriz_A,matriz_B,matriz_C)                
                 else:
                     linha()
                     print('É impossivel multiplicar essas matrizes, pois o número de colunas da primeira matriz é diferente do número de linhas da segunda matriz!')  
@@ -301,9 +331,6 @@ def escolha_4():
                 print("Matriz transposta")
                 imprimir_matriz(transposta)
                 linha()
-            elif escolhaLetra_4 == '0':
-                print("Voltando ao menu principal.")
-                break
             else:
                 print("Opção inválida. Tente novamente.")
                 continue
