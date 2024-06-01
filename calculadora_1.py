@@ -16,7 +16,7 @@ def menu():
     print("2 - Funções de segundo grau")
     print("3 - Funções exponenciais")
     print("4 - Matrizes")
-    print("5 - Sair da calculadora")
+    print("0 - Sair da calculadora")
     linha_menu()
 
 def linha_menu():
@@ -44,9 +44,11 @@ def calcular_uniao(conjuntoA,conjuntoB):
 
 def escolha_1():
     global menu, escolha_opcao
+    linha()
     print("Perfeito, opção (conjuntos numérios) selecionada!")
     linha()
     print("Informe seus conjuntos!")
+    print('OBS:Digite os elementos entre espaços')
     conj1 = pedir_conjunto("A")
     conj2 = pedir_conjunto("B")
     while True:
@@ -61,30 +63,44 @@ def escolha_1():
             linha()
             if escolhaLetra1 == '0':
                 print("Voltando...")
+                sleep()
                 break
 
             if escolhaLetra1.lower() == 'a':
                 if conj1 <= conj2 and conj1 != conj2:
+                    linha()
                     print("A é um subconjunto próprio de B")
-
+                    linha()
+                    sleep()
                 elif conj2 <= conj1 and conj2 != conj1:
+                    linha()
                     print("A não é um subconjunto próprio de B, mas B é um subconjunto próprio de A")
-
+                    linha()
+                    sleep()
                 else:
+                    linha()
                     print("A não é um subconjunto próprio de B")
+                    linha()
+                    sleep()
 
             elif escolhaLetra1.lower() == 'b':
                 uniao =  calcular_uniao(conj1,conj2)
+                linha()
                 print(f" A união é: {uniao}")
-
+                linha()
+                sleep()
             elif escolhaLetra1.lower() == 'c':
                 interseccao = calcular_interseccao(conj1,conj2)
+                linha()
                 print(f" A intersecção é: {interseccao}")
-
+                linha()
+                sleep()
             elif escolhaLetra1.lower() == 'd':
+                linha()
                 diferenca = calcular_diferença(conj1,conj2)
                 print(f"A diferença é: {diferenca}")
-
+                linha()
+                sleep()
             else:
                 print("Opção inválida. Tente novamente.")
                 continue
@@ -130,7 +146,7 @@ def calcular_raizes(a,b,delta):
         raiz2= (-b - (delta*1/2))/(2*a)
         return raiz1,raiz2
 
-def imprimir_raizes(raiz):
+def imprimir_raizes_complexas(raiz):
     for r in raiz:
         print(f'{r} i')
 
@@ -180,27 +196,49 @@ def escolha_2():
             if escolha_letra_2 == 'e':
                     raizes=calcular_raizes(a,b,delta)
                     if delta < 0:
-                        print(f"Existem duas raizes complexas {raizes}")
+                        linha()
+                        raiz=imprimir_raizes_complexas(raizes)
+                        print(f"Existem duas raizes complexas {raiz}")
+                        linha()
+                        sleep()
                     elif delta == 0:
+                        linha()
                         print(f"Existe uma raiz real {raizes}" )
+                        linha()
+                        sleep()
                     else:
+                        linha()
                         print(f"Existem duas raizes reais {raizes}")
+                        linha()
+                        sleep()
 
             elif escolha_letra_2 == 'f':
                 print("Ok, vamos calcular a função em X pedido:")
                 x = pedir_valor('X')
                 resultado = calcular_segundo_grau(a, b, c, x)
+                linha()
                 print(f"Para a função f(x) = {a}x² + {b}x + {c}, quando x = {x}, o resultado é: {resultado}")
+                linha()
+                sleep()
 
             elif escolha_letra_2 == 'g':
                 print("Ok, vamos calcular o vértice:")
                 x_vertice = calcular_verticiex(b,a)
                 y_vertice = calcular_verticiey(delta,a)
+                linha()
                 print(f"O x do vértice da parábola é :{x_vertice}\nO y do vértice da parábola é :{y_vertice}")
+                linha()
+                sleep
                 if a>0:
+                    linha()
                     print('Ponto de Mínimo')
+                    linha()
+                    sleep()
                 else:
+                    linha()
                     print('Ponto de Máximo')
+                    linha()
+                    sleep()
 
             elif escolha_letra_2 == 'h': 
 
@@ -232,7 +270,9 @@ def gerar_grafico_exponencial(a, b,x):
     plt.show()
   
 def escolha_3():
+    linha()
     print("Perfeito, opção (funções exponenciais) selecionada!")
+    linha()
     print('Informe os valores!')
     while True:
         valor_a = pedir_valor('a')
@@ -264,32 +304,59 @@ def escolha_3():
         if escolha_letra_3 == 'i':
                 print("Ok, vamos verificar se a função é crescente ou decrescente")
                 if valor_b > 1 and valor_a > 0:
+                    linha()
                     print("A função é crescente!")
-                    continue
+                    linha()
+                    sleep()
+                    
                 elif 0 < valor_b < 1 and valor_a < 0:
+                    linha()
                     print("A função é crescente!")
-                    continue
+                    linha()
+                    sleep()
+                    
                 else:
                     print("A função é decrescente")
-                    continue
+                
         elif escolha_letra_3 == 'j':
             resultado = calcular_exponencial(valor_a, valor_b, valor_x)
+            linha()
             print(f"Para a função f(x) = {valor_a} * {valor_b}^x, quando x = {valor_x}, o resultado é: {resultado}")
+            linha()
+            sleep()
             continue
         elif escolha_letra_3 == 'k': 
-            gerar_grafico_exponencial(valor_a,valor_b,valor_x)              
+            gerar_grafico_exponencial(valor_a,valor_b,valor_x)
+            continue              
         else:
             print("Opção inválida. Tente novamente.")
             continue
 
+def imprimir_matrizes_multiplicacao(matriza,matrizb,matrizc):
+    print('\n    Matriz A   X   B   +   AXB\n')
+    for i in range(len(matriza)):
+        linha=""
+    # O número de linhas da matriz resultante será igual ao número de linhas da primeira matriz
+        for elemento in matriza[i]:
+            linha+=str(elemento) + " "
+        linha+="   "
+        for elemento in matrizb[i]:
+            linha+=str(elemento) + " "
+        linha+="   "  
+        for elemento in matrizc[i]:
+            linha+=str(elemento) + " "
+        print(linha)
+        #Foi como um acumulador e no fim printa a "linha" que acumulou
+
 def escolha_4():
-    print("Perfeito, opção (matrizes) selecionada!")
-    while True:
-            escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
-            linhasMA=pedir_informacao_matriz('linhas','A')
-            colunasMA=pedir_informacao_matriz('colunas','A')
-            matriz_A=gerar_matriz(linhasMA,colunasMA)
-            imprimir_matriz(matriz_A)
+        linha()
+        print("Perfeito, opção (matrizes) selecionada!")
+        linha()
+        linhasMA=pedir_informacao_matriz('linhas','A')
+        colunasMA=pedir_informacao_matriz('colunas','A')
+        matriz_A=gerar_matriz(linhasMA,colunasMA)
+        imprimir_matriz(matriz_A)
+        while True:
             linha_menu()
             print("O que voce deseja fazer?")
             print("L - Determinante (2X2 ou 3x3) - Verificar se é matriz quadrada ")
@@ -297,20 +364,32 @@ def escolha_4():
             print("N - Matriz transposta")
             print("0 - Voltar")
             linha_menu()
+            escolhaLetra_4 = input("Digite a letra da opção desejada: ").lower()
             if escolhaLetra_4 == '0':
                 print("Voltando ao menu principal...")
                 sleep()
                 break
             if escolhaLetra_4 == 'l':
                 if verificar_matriz_quadrada(matriz_A):
+                    linha()
                     print('Essa é uma matriz quadrada')
+                    linha()
                     if verificar_matriz2x2(matriz_A):
+                        linha()
                         print(f'O determinate dessa matriz 2x2 é: {calcular_determinate2x2 (matriz_A)}')
+                        linha()
+                        sleep()
 
                     if verificar_matriz3x3(matriz_A):
+                        linha()
                         print(f'O determinante dessa matriz 3x3 é: {calcular_determinate3x3(matriz_A)}')
+                        linha()
+                        sleep()
                 else:
+                    linha()
                     print('Essa matriz NÃO é quadrada, portanto o número linha é diferente do número de colunas!')
+                    linha()
+                    sleep()
             elif escolhaLetra_4 == 'm':
                 linhaMB=pedir_informacao_matriz('linhas','B')
                 colunaMB=pedir_informacao_matriz('colunas','B')
@@ -319,11 +398,15 @@ def escolha_4():
                 if verificacao_multiplicacao(matriz_A,matriz_B):
                     print('É possível realizar essa multplicação de matrizes!')
                     matriz_C=multiplicar_matrizes(matriz_A,matriz_B)
-                    imprimir_matrizes_multiplicacao(matriz_A,matriz_B,matriz_C)                
+                    linha()
+                    imprimir_matrizes_multiplicacao(matriz_A,matriz_B,matriz_C)     
+                    linha()
+                    sleep()           
                 else:
                     linha()
                     print('É impossivel multiplicar essas matrizes, pois o número de colunas da primeira matriz é diferente do número de linhas da segunda matriz!')  
                     linha()
+                    sleep()
                     break  
             elif escolhaLetra_4 == 'n':
                 transposta=calcula_matriz_trasposta(matriz_A)
@@ -331,9 +414,11 @@ def escolha_4():
                 print("Matriz transposta")
                 imprimir_matriz(transposta)
                 linha()
+                sleep()
             else:
-                print("Opção inválida. Tente novamente.")
+                print("Opção inválida. Digite novamente!")
                 continue
+
 def gerar_matriz(num_linhas,num_colunas):
     matriz=[]
     for i in range(num_linhas):
@@ -438,15 +523,21 @@ def calcular_determinate3x3(matriz):
 ####  programa principal ####
 
 while True:
-    menu()  
-    opcao = escolha_opcao()
-    if opcao == 5:
-        break
-    elif opcao == 1:
-        escolha_1()
-    elif opcao == 2:
-        escolha_2()
-    elif opcao == 3:
-        escolha_3()
-    elif opcao == 4:
-        escolha_4()
+    try:
+        menu()  
+        opcao = escolha_opcao()
+        if opcao == 0:
+            break
+        if opcao == 1:
+            escolha_1()
+        elif opcao == 2:
+            escolha_2()
+        elif opcao == 3:
+            escolha_3()
+        elif opcao == 4:
+            escolha_4()
+        else:
+            print('Opção inválida, digite novamente!')
+            continue
+    except ValueError:
+        print('Opção inválida, digite novamente!')

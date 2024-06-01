@@ -1,35 +1,21 @@
-import numpy as np
-import matplotlib.pyplot as plt
+matriza = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+matrizb = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+matrizc = [[2, 2, 2], [2, 2, 2], [2, 2, 2]]
 
-def calcular_segundo_grau(a, b, c, x):
-    return a * x**2 + b * x + c
+def imprimir_matrizes_multiplicacao(matriza,matrizb,matrizc):
 
-def definir_eixox():
-    x = np.linspace(-10, 10, 1000)  # Reduzindo o intervalo para -10 a 10
-    return x
-
-def gerar_eixoy(a, b, c):
-    eixoy = []
-    eixox = definir_eixox()
-    for x in eixox:
-        y = calcular_segundo_grau(a, b, c, x)
-        eixoy.append(y)
-    return eixoy
-
-def gerar_grafico(a, b, c):
-    x = definir_eixox()
-    y = gerar_eixoy(a, b, c)
-    plt.plot(x, y)
-    plt.xlabel('Eixo X')
-    plt.ylabel('Eixo Y')
-    plt.title('Gráfico de uma função de segundo grau')
-    plt.grid(True)
-    plt.show()
-
-# Coeficientes da equação de segundo grau
-a = 1
-b = 0
-c = 0
-
-# Gerar o gráfico
-gerar_grafico(a, b, c)
+    print('Matriz A   X   B   +   AXB\n')
+    for i in range(len(matriza)):
+        linha=""
+    # O número de linhas da matriz resultante será igual ao número de linhas da primeira matriz
+        for elemento in matriza[i]:
+            linha+=str(elemento) + " "
+        linha+="   "
+        for elemento in matrizb[i]:
+            linha+=str(elemento) + " "
+        linha+="   "  
+        for elemento in matrizc[i]:
+            linha+=str(elemento) + " "
+        print(linha)
+        #Foi como um acumulador e no fim printa a "linha" que acumulou
+imprimir_matrizes_multiplicacao(matriza,matrizb,matrizc)
