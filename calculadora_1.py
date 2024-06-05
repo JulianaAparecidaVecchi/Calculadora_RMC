@@ -1,7 +1,6 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-
 def linha():
     print(80*"-")
 
@@ -121,9 +120,6 @@ def gerar_eixoy(a,b,c):
         eixoy.append(y)
     return eixoy
 
-def gerar_grafico(x,y):
-    pass
-
 def pedir_valor(nomea):
     a = float(input(f"Informe o valor de {nomea}: "))
     return a
@@ -132,23 +128,20 @@ def calcular_delta(a,b,c):
     delta = (b**2) - 4*a*c
     return delta
 
-def calcular_raizes(a,b,delta):
+def calcular_raizes(a, b, delta):
     if delta < 0:
-        parte_real=-b/2*a
-        parte_imaginaria=-delta/2*a
-        raiz1=(parte_real,+parte_imaginaria)
-        return raiz1
-    elif delta==0:
-        raiz = -b / (2*a)
+        parte_real = -b / (2 * a)
+        parte_imaginaria = (-delta)**0.5 / (2 * a)
+        raiz1 = complex(parte_real, parte_imaginaria)
+        raiz2 = complex(parte_real, -parte_imaginaria)
+        return raiz1, raiz2
+    elif delta == 0:
+        raiz = -b / (2 * a)
         return raiz
     else:
-        raiz1= (-b + (delta*1/2))/(2*a)
-        raiz2= (-b - (delta*1/2))/(2*a)
-        return raiz1,raiz2
-
-def imprimir_raizes_complexas(raiz):
-    for r in raiz:
-        print(f'{r} i')
+        raiz1 = (-b + (delta**0.5)) / (2 * a)
+        raiz2 = (-b - (delta**0.5)) / (2 * a)
+        return raiz1, raiz2
 
 def calcular_verticiex(b,a):
     vx=-b/(2*a)
@@ -197,8 +190,7 @@ def escolha_2():
                     raizes=calcular_raizes(a,b,delta)
                     if delta < 0:
                         linha()
-                        raiz=imprimir_raizes_complexas(raizes)
-                        print(f"Existem duas raizes complexas {raiz}")
+                        print(f"Existem duas raizes complexas {raizes}")
                         linha()
                         sleep()
                     elif delta == 0:
